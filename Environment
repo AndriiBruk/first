@@ -1,0 +1,54 @@
+{
+	"id": "b2f57735-47ac-43a5-b946-4d403097d1cb",
+	"name": "users.bugred.ru",
+	"values": [
+		{
+			"key": "company_name",
+			"value": "FStylee",
+			"enabled": true
+		},
+		{
+			"key": "emailOwner",
+			"value": "di@gmail.com",
+			"enabled": true
+		},
+		{
+			"key": "randomType",
+			"value": "ОАО",
+			"enabled": true
+		},
+		{
+			"key": "randomTypeLatin",
+			"value": "OAO",
+			"enabled": true
+		},
+		{
+			"key": "currentDate",
+			"value": "$timestamp",
+			"enabled": true
+		},
+		{
+			"key": "userName",
+			"value": "Андрій",
+			"enabled": true
+		},
+		{
+			"key": "userPassword",
+			"value": "111",
+			"enabled": true
+		},
+		{
+			"key": "littleINN",
+			"value": 35530492546,
+			"enabled": true
+		},
+		{
+			"key": "bigINN",
+			"value": 8.286639276735468e+23,
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-03-17T20:12:07.629Z",
+	"_postman_exported_using": "Postman/7.20.1"
+}

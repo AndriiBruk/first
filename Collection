@@ -1,0 +1,1550 @@
+{
+	"info": {
+		"_postman_id": "d0ea7a7a-a1f6-4000-b1f2-7b40b2d252ac",
+		"name": "users.bugred.ru",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Creating user",
+			"item": [
+				{
+					"name": "Minimum fields are filled with valid data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c27d0d8e-10a6-4783-95a2-e001a4f150ed",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "492afcb5-1ac7-4c7c-a4e6-ea741cb19ada",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"The user is created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(requestData.name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{emailOwner}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"tasks\": [56],\r\n  \"companies\": [7, 8]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Maximum fields are filled with valid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"The user is created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(requestData.email.toLowerCase());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"tasks\": [12],\r\n  \"companies\": [36,37],\r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email address without \"@\"",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Type is error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"email неправильный!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"emaigmail.com\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"tasks\": [12],\r\n  \"companies\": [36,37],\r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With not uniq email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Type is error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Пользователь с таким email уже существует \");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{emailOwner}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"tasks\": [12],\r\n  \"companies\": [36,37],\r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With not uniq name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Type is error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\" имя \"+requestData.name+\" уже есть в БД\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"name\": \"{{userName}}\",\r\n  \"tasks\": [12],\r\n  \"companies\": [36,37],\r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Type is error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр companies является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"tasks\": [12],\r\n  \r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2c2d464-72ac-4190-b30c-eea81c37801a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Type is error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр tasks является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \r\n  \"companies\": [36,37],\r\n  \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuser",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuser"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating company",
+			"item": [
+				{
+					"name": "With valid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"Creating is success\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"success\");",
+									"});",
+									"",
+									"pm.test(\"The name of company is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.company.name).to.eql(company_name=pm.environment.get(\"company_name\"));",
+									"});",
+									"",
+									"pm.test(\"Type of company is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.company.type).to.eql(requestData.company_type);",
+									"});",
+									"",
+									"pm.test(\"Company users are recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.company.users).to.eql(requestData.company_users);",
+									"});",
+									"",
+									"responseData= JSON.parse(responseBody);",
+									"",
+									"pm.test(\"The id_company is set\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id_company).to.eql(responseData.id_company);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bc2dc167-7908-4271-9400-f5a9d64b2a6b",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"{{randomType}}\",\n    \"company_users\": [\n        \"{{emailOwner}}\"\n        \n        \n    ],\n    \"email_owner\": \"{{emailOwner}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without company name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр company_name является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"company_type\": \"ООО\",\n    \"company_users\": [\n        \"do@gmail.com\"\n        \n    ],\n    \"email_owner\": \"do@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without company type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр company_type является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \n    \"company_users\": [\n        \"do@gmail.com\"\n        \n    ],\n    \"email_owner\": \"do@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without company users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр company_users является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"ООО\",\n    \n    \"email_owner\": \"do@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without email owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Параметр email_owner является обязательным!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"ООО\",\n    \"company_users\": [\n        \"do@gmail.com\"\n        \n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With latin type_name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\" company_type \"+pm.environment.get(\"randomTypeLatin\")+\" некорректный\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bc2dc167-7908-4271-9400-f5a9d64b2a6b",
+								"exec": [
+									"var company_type = [\"OOO\",\"OAO\"];",
+									"var randomTypeLatin = company_type[Math.floor(Math.random()*company_type.length)];",
+									"",
+									"pm.environment.set(\"randomTypeLatin\",randomTypeLatin);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"{{randomTypeLatin}}\",\n    \"company_users\": [\n        \"{{emailOwner}}\"\n        \n        \n    ],\n    \"email_owner\": \"{{emailOwner}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With invalid type_name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\" company_type \"+requestData.company_type+\" некорректный\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bc2dc167-7908-4271-9400-f5a9d64b2a6b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"{{$randomCompanySuffix}}\",\n    \"company_users\": [\n        \"{{emailOwner}}\"\n        \n        \n    ],\n    \"email_owner\": \"{{emailOwner}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With invalid email_owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a881bc-d538-4c6d-af79-3c95f248f7d0",
+								"exec": [
+									"pm.test(\"Creating error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Пользователь не найден c email_owner \"+requestData.email_owner.toLowerCase());",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bc2dc167-7908-4271-9400-f5a9d64b2a6b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"{{company_name}}\",\n    \"company_type\": \"{{$randomCompanySuffix}}\",\n    \"company_users\": [\n        \"{{emailOwner}}\"\n        \n        \n    ],\n    \"email_owner\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createcompany"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "eb2e9e80-3dad-4cda-aa29-792533410fb9",
+						"type": "text/javascript",
+						"exec": [
+							"var company_type = [\"ИП\",\"ООО\",\"ОАО\"];",
+							"var randomType = company_type[Math.floor(Math.random()*company_type.length)];",
+							"",
+							"pm.environment.set(\"randomType\",randomType);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfdc1460-0603-4c1d-85de-cab8ee5cdd51",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Creating user with tasks",
+			"item": [
+				{
+					"name": "Minimum fields are filled with valid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "95644d11-4173-4512-9399-f42c1237de15",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"Email is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(requestData.email.toLowerCase());",
+									"});",
+									"",
+									"pm.test(\"Name is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(requestData.name);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Task 1 title is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.tasks[0].name).to.eql(\"Первая задача\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1990e030-ce85-4ac0-ad35-700a370ab96c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomUserName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"Первая задача\",\r\n   \"description\": \"Первая задача 11\"\r\n  },\r\n  {\r\n   \"title\": \"Вторая задача\",\r\n   \"description\": \"Вторая задача 11\"\r\n  }\r\n ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Maximum fields are filled with valid data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3d849ff8-520b-4208-a92e-6d268d7f8ce9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "704abb1e-b6b5-4149-825b-9bb9893b1eb7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"pm.test(\"Name is recorded\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(requestData.name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  },\r\n  {\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with existed email",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c9cf1f4-5dd2-44bb-9176-426a749abd4a",
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "16ab0a0a-9f85-4e55-959a-927677d18b34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Type check\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Пользователь с таким email уже существует \");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"test_cu_3@mail.com\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"Первая задача 2\",\r\n   \"description\": \"Первая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Вторая задача 2\",\r\n   \"description\": \"Вторая задача 111\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with existed name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c9cf1f4-5dd2-44bb-9176-426a749abd4a",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://users.bugred.ru/tasks/rest/createuserwithtasks',",
+									"    method: 'POST',",
+									"    header: 'headername1:value1',",
+									"    body: {",
+									" \"email\": \"test_cu_26@mail.com\",",
+									" \"name\": \"Рестовый 6\",",
+									" \"tasks\": [{",
+									"   \"title\": \"Первая задача\",",
+									"   \"description\": \"Первая задача 11\"",
+									"  }",
+									" ]",
+									"}",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "16ab0a0a-9f85-4e55-959a-927677d18b34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Type check\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"requestData= JSON.parse(request.data);",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\" имя \"+requestData.name+\" уже есть в БД\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"Name\",\r\n \"tasks\": [{\r\n   \"title\": \"Первая задача 2\",\r\n   \"description\": \"Первая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Вторая задача 2\",\r\n   \"description\": \"Вторая задача 111\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With more than 5 tasks",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c9cf1f4-5dd2-44bb-9176-426a749abd4a",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://users.bugred.ru/tasks/rest/createuserwithtasks',",
+									"    method: 'POST',",
+									"    header: 'headername1:value1',",
+									"    body: {",
+									" \"email\": \"test_cu_26@mail.com\",",
+									" \"name\": \"Рестовый 6\",",
+									" \"tasks\": [{",
+									"   \"title\": \"Первая задача\",",
+									"   \"description\": \"Первая задача 11\"",
+									"  }",
+									" ]",
+									"}",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "16ab0a0a-9f85-4e55-959a-927677d18b34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Type error, more than 5 tasks\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"Первая задача 2\",\r\n   \"description\": \"Первая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Вторая задача 2\",\r\n   \"description\": \"Вторая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Третья задача 2\",\r\n   \"description\": \"Третья задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Четвертая задача 2\",\r\n   \"description\": \"Четвертая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Пятая задача 2\",\r\n   \"description\": \"Пятая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Шестая задача 2\",\r\n   \"description\": \"Шестая задача 111\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "With more than 3 companies",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c9cf1f4-5dd2-44bb-9176-426a749abd4a",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://users.bugred.ru/tasks/rest/createuserwithtasks',",
+									"    method: 'POST',",
+									"    header: 'headername1:value1',",
+									"    body: {",
+									" \"email\": \"test_cu_26@mail.com\",",
+									" \"name\": \"Рестовый 6\",",
+									" \"tasks\": [{",
+									"   \"title\": \"Первая задача\",",
+									"   \"description\": \"Первая задача 11\"",
+									"  }",
+									" ]",
+									"}",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "16ab0a0a-9f85-4e55-959a-927677d18b34",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Type error, more than 3 companies\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"параметр companies в нем размер массива должен быть не больше 3\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"Первая задача 2\",\r\n   \"description\": \"Первая задача 111\"\r\n  },\r\n  {\r\n   \"title\": \"Вторая задача 2\",\r\n   \"description\": \"Вторая задача 111\"\r\n  }\r\n ],\r\n \"companies\": [17,18,19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "INN less than 12 numbers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3d849ff8-520b-4208-a92e-6d268d7f8ce9",
+								"exec": [
+									"pm.environment.set(\"littleINN\", _.random(1, 99999999999));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "704abb1e-b6b5-4149-825b-9bb9893b1eb7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Type error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message. INN must contain 12 numbers\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"параметр inn должен содержать 12 цифр\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  },\r\n  {\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "INN more than 12 numbers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3d849ff8-520b-4208-a92e-6d268d7f8ce9",
+								"exec": [
+									"pm.environment.set(\"bigINN\", _.random(1000000000000, 999999999999999999999999));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "704abb1e-b6b5-4149-825b-9bb9893b1eb7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Type error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.type).to.eql(\"error\");",
+									"});",
+									"",
+									"pm.test(\"Message. INN must contain 12 numbers\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"параметр inn должен содержать 12 цифр\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"{{$randomEmail}}\",\r\n \"name\": \"{{$randomFirstName}}\",\r\n \"tasks\": [{\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  },\r\n  {\r\n   \"title\": \"{{$randomCompanyName}}\",\r\n   \"description\": \"{{$randomWords}}\"\r\n  }\r\n ],\r\n \"companies\": [19, 20],\r\n \"hobby\":\"Стрельба из лука, Настолки\",\r\n  \"adres\":\"адрес 1\",\r\n  \"name1\":\"Тестовый, ясен пень\",\r\n  \"surname1\":\"Иванов\",\r\n  \"fathername1\":\"Петров\",\r\n  \"cat\":\"Маруся\",\r\n  \"dog\":\"Ушастый\",\r\n  \"parrot\":\"Васька\",\r\n  \"cavy\":\"Кто ты?\",\r\n  \"hamster\":\"Хомяк\",\r\n  \"squirrel\":\"Белая горячка к нам пришла\",\r\n  \"phone\":\"333 33 33\",\r\n  \"inn\":\"123456789012\",\r\n  \"gender\":\"m\",\r\n  \"birthday\":\"01.01.1900\",\r\n  \"date_start\":\"11.11.2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://users.bugred.ru/tasks/rest/createuserwithtasks",
+							"protocol": "http",
+							"host": [
+								"users",
+								"bugred",
+								"ru"
+							],
+							"path": [
+								"tasks",
+								"rest",
+								"createuserwithtasks"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4402ad90-a9c3-4f22-9b6f-3888d4e196c8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "806fec09-e493-40d5-aa5b-7c4ac3c52615",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
